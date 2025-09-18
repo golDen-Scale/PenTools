@@ -7,11 +7,13 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description="BuffFuzzer v1.0")
-    parser.add_argument("--ip", type=str, help="Target IP address",  required=True)
-    parser.add_argument("--port", type=int, help="Target port number", required=True)
+    parser.add_argument("-ip",  type=str, help="Target IP address",  required=True)
+    parser.add_argument("-port", type=int, help="Target port number", required=True)
+    parser.add_argument("-output", type=str, help="Output file (optional)", required=False)
     args = parser.parse_args()
     target_ip = args.ip
     target_port = args.port
+    output_file = args.output
 
     buffer = "A" * 100
 
@@ -34,6 +36,9 @@ def main():
 
         except socket.timeout:
             print(f"Target response timed out. Crashed at {len(buffer)} bytes.")
+            if output_file:
+                with open(output_file, "a") as f:
+                    f.write(f"Target crashed at {len(buffer)} bytes\n")
             sys.exit()
         except Exception as e:
             print(f"An error occurred: {e}")
