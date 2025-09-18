@@ -7,7 +7,7 @@
 </p>
 
 ## Language
-[简体中文](README.zh-CN.md)
+[简体中文](README.md)
 
 ## Description
 - This project aims to provide legitimate security testing tools for security researchers, system administrators, and IT professionals, intended for authorized security assessments, educational research, and improving system security.
