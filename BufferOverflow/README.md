@@ -2,7 +2,9 @@
 - TRUN
 - GTER
 - KSTET
+- GMON
 #### Test script targeting vulnserver application, defective commands include:
 - TRUN
 - GTER
 - KSTET
+- GMON

